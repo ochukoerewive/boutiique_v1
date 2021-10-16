@@ -54,8 +54,7 @@
             <div class="input-group-append">
               <button class="form-control btn btn-black border border-black rounded-0" type="submit">
                 <span class="icon">
-                  <i class="fas fa-search">
-                  </i>
+                  <i class="fas fa-search"></i>
                 </span>
               </button>
 
@@ -63,11 +62,49 @@
           </div>
         </form>
       </div>
-
+<!-- The last header for the container will contatin the shopping logo with two list elements-->
       <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
         <ul class="list-inline list-unstyled text-center text-lg-right my-0">
-          <i class="list-inline-item dropdown"></i>
-          <i class="list-inline-item"></i>
+          <li class="list-inline-item dropdown">
+<!-- The section is for the parent menu-->
+            <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="text-center">
+                <div><i class="fas fa-user fa-lg"></i></div>
+                <p class="my-0"mY Account></p>
+              </div>
+            </a>
+<!-- A section for user authentication-->
+<!-- A section also shows the user login and if they dont have an account there is a section to register-->
+            <div class="dropdown-menu border-0" aria-labelledby="user-options">
+              {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                  <a href="" class="dropdown-item">Product Management</a>
+                {% endif %}
+                <a href="" class="dropdown-item">My Profile</a>
+              {% else %}
+                <a href="{% url 'account_signup' %}" class="drop-down-item">Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+              {% endif %}
+            </div>
+ 
+          </li>
+          <li class="list-inline-item">
+            <a class="{% if gran_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+              <div class="text-center">
+                <div><i class="fas fa-shooping-bag fa-lg"></i>
+                </div>
+<!-- This section is to check for the template variable exist and if does we display the total formatted to 2 decimal places, if not it displays 0-->
+                <p class="my-0">
+                  {% if grond_total %}
+                    ${{ grand_total|floatformat:2 }}
+                  {% else %}
+                    $0.00
+                  {% endif %}
+                </p>
+
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
